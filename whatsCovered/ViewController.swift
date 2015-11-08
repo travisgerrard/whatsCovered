@@ -43,7 +43,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         Abx(name:"Cefotaxime", additionalInfo:"1st line: Spontaneous Bacterial Peritonitis", poIV:"2g IV q8h", coverageFull:["GNR"], coveragePartial:["Strep"], clearance:"Renal"),
         Abx(name:"Cephalexin (Keflex)", additionalInfo:"Indication: streptococcal SSTI", poIV:"500mg PO Q6h", coverageFull:["MSSA", "Strep"], coveragePartial:[], clearance:"Renal"),
         Abx(name:"Ciprofloxacin", additionalInfo:"1st line: UTI (after Trim/Sulfa), do NOT use for CAP. Watch QTc", poIV:"200-400mg IV q12", coverageFull:["GNR", "pAeurg", "Atypical"], coveragePartial:[], clearance:"Renal"),
-        Abx(name:"Cindamycin", additionalInfo:"Indic: Osteo, retropharyng abscess, anaerobic pulm infection, Babesiosis. #1 cause of C. Diff", poIV:"600-900mg IV Q8h", coverageFull:["MRSA", "Strep", "Anaerobes"], coveragePartial:["MSSA"], clearance:"Renal"),
+        Abx(name:"Clindamycin", additionalInfo:"Indic: Osteo, retropharyng abscess, anaerobic pulm infection, Babesiosis. #1 cause of C. Diff", poIV:"600-900mg IV Q8h", coverageFull:["MRSA", "Strep", "Anaerobes"], coveragePartial:["MSSA"], clearance:"Renal"),
         Abx(name:"Colistin", additionalInfo:"Inidc: Severe drug-resistent GNR. Severe tox: nephro, neuro", poIV:"2.5-5mg/kg/day", coverageFull:["Strep", "Atypical"], coveragePartial:[], clearance:"Renal"),
         Abx(name:"Daptomycin (Cubicin)", additionalInfo:"1st line: VRE bacteremia. Inactivated by lung surfactant. VRE -> 6mg", poIV:"4-6mg/kh/day IV", coverageFull:["MRSA", "MSSA", "Strep", "Entero"], coveragePartial:[], clearance:"Renal"),
         Abx(name:"Doxycycline", additionalInfo:"1st line: Rickettsia, Atypical PNA. Not in pregnancy, Age < 8", poIV:"100mg PO/IV Q12h", coverageFull:["MRSA", "Strep", "Atypical", "Anaerobes"], coveragePartial:["MSSA"], clearance:"Liver"),
@@ -118,6 +118,22 @@ class ViewController: UIViewController, UITextFieldDelegate {
         searchTextField.delegate = self
         searchTextField.addTarget(self, action: "textFieldDidChange:", forControlEvents: UIControlEvents.EditingChanged)
         self.view.addSubview(searchTextField)
+    }
+
+    func textFieldShouldClear(textField: UITextField) -> Bool {
+        delay(0.1) {
+            self.view.endEditing(true)
+        }
+        return true
+    }
+    
+    func delay(delay:Double, closure:()->()) {
+        dispatch_after(
+            dispatch_time(
+                DISPATCH_TIME_NOW,
+                Int64(delay * Double(NSEC_PER_SEC))
+            ),
+            dispatch_get_main_queue(), closure)
     }
     
     func textFieldDidChange(textField: UITextField) {
